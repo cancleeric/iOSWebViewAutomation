@@ -91,3 +91,54 @@ iOSInjectionProject/
 
 # macOS
 .DS_Store
+*.swp
+*~.nib
+
+# IDEs
+/.idea
+*.iml
+.vscode/
+
+# Provisioning
+*.mobileprovision
+*.cer
+*.certSigningRequest
+*.p12
+
+# Test Logs
+*.log
+/tmp/
+test_output.log
+device_test_output.log
+fixed_test_output.log
+
+# Xcode Test Results
+*.xcresult
+*.coverage
+*.profdata
+
+# Simulator
+*.app
+
+# Keychain
+*.keychain
+*.keychain-db
+
+# Private Keys & Certificates
+*.key
+*.pem
+
+# Build artifacts
+*.ipa
+*.app.dSYM.zip
+
+# SwiftLint
+.swiftlint.yml
+
+# Environment
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp
