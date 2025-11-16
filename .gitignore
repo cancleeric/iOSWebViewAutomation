@@ -142,3 +142,6 @@ fixed_test_output.log
 # Temporary files
 *.tmp
 *.temp
+
+# Claude Code
+.claude/settings.local.json
