@@ -65,13 +65,40 @@ class ViewController: UIViewController {
     }
 
     private func loadTestPage() {
-        // 加载本地 HTML 文件
-        if let htmlPath = Bundle.main.path(forResource: "test_login", ofType: "html") {
-            let url = URL(fileURLWithPath: htmlPath)
-            webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+        // 檢查啟動參數，決定載入哪個頁面
+        let args = ProcessInfo.processInfo.arguments
+
+        if args.contains("-LoadSudoku") {
+            // 載入數讀遊戲
+            loadSudokuGame()
         } else {
-            print("无法找到 test_login.html 文件")
+            // 預設載入登入測試頁面
+            if let htmlPath = Bundle.main.path(forResource: "test_login", ofType: "html") {
+                let url = URL(fileURLWithPath: htmlPath)
+                webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+            } else {
+                print("無法找到 test_login.html 檔案")
+            }
         }
+    }
+
+    private func loadSudokuGame() {
+        // 載入數讀遊戲 - 從 Docker 容器
+        // Docker 容器運行在 http://localhost:8078
+        // Port 8078 已在 Squid 系統 config/ports.py 中註冊為 SUDOKU_GAME_PORT
+
+        let sudokuURL = URL(string: "http://localhost:8078")!
+        let request = URLRequest(url: sudokuURL)
+        webView.load(request)
+        print("✅ 開始載入數讀遊戲: \(sudokuURL.absoluteString)")
+
+        // 備註：也可以使用本地檔案方式（需要將 sudoku 資料夾加入 Xcode 專案）
+        // if let sudokuPath = Bundle.main.path(forResource: "sudoku/index", ofType: "html") {
+        //     let url = URL(fileURLWithPath: sudokuPath)
+        //     let sudokuDir = url.deletingLastPathComponent().deletingLastPathComponent()
+        //     webView.loadFileURL(url, allowingReadAccessTo: sudokuDir)
+        //     print("✅ 成功載入數讀遊戲: \(url.path)")
+        // }
     }
 
     // MARK: - 测试辅助方法（方案 1：evaluateJavaScript）
